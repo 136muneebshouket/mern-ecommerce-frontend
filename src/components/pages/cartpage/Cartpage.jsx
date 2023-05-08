@@ -102,14 +102,15 @@ function Cartpage({ cart }) {
 
       const userid = localStorage.getItem("userid");
      
-        console.log(userid);
+        // console.log(userid);
         let cartobj = {
           userid,
           cartItems: [{ product: cart._id }]
         }
 
         await axiosInstance.post(`${URL}/api/carts/createcart`, cartobj)
-          .then(() => {
+        // await axiosInstance.post(`${URL}/api/auth/getuser`)
+          .then((res) => {
             //  console.log(res);
             // console.log(`A new cart has been successfully added${cart._id}.`)
             // setIsloading(false)
@@ -125,6 +126,7 @@ function Cartpage({ cart }) {
               theme: "colored",
             });
             setIsloading(false)
+            if(res){ return; }
           })
           .catch(err => {
 

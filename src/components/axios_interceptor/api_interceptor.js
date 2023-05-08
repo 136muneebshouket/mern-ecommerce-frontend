@@ -40,7 +40,7 @@ function clearTokens() {
 // let refresh_token = localStorage.getItem('refreshToken');
 // let access_token = localStorage.getItem('usertoken');
 
-if (getAccessToken() && getRefreshToken()) {
+
   // // Axios Interceptor
   axiosInstance.interceptors.request.use(async (config) => {
     console.log("interceptor config hitted");
@@ -77,8 +77,7 @@ if (getAccessToken() && getRefreshToken()) {
           console.log("reloaded error 1 intercepters");
           // window.location.reload();
         } else {
-          return axios
-            .post(`${URL}/api/refreshtoken/token`, { refreshToken })
+          return axios.post(`${URL}/api/refreshtoken/token`, { refreshToken })
             .then((response) => {
               const { accessToken } = response.data;
               setTokens(accessToken);
@@ -86,7 +85,8 @@ if (getAccessToken() && getRefreshToken()) {
               // console.log(accessToken);
               // Retry the original request with the new JWT token
               const config = error.config;
-              config.headers.Authorization = `Bearer ${accessToken}`;
+              config.headers.Authtokken = accessToken;
+              // console.log(accessToken)
               return axiosInstance.request(config);
             })
             .catch((error) => {
@@ -100,7 +100,7 @@ if (getAccessToken() && getRefreshToken()) {
       return Promise.reject(error);
     }
   );
-}
+
 
 
 export default axiosInstance;
